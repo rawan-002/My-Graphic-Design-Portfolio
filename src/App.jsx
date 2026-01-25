@@ -313,7 +313,7 @@ const Home = () => {
           </div>
 
           <div
-            className="relative w-full h-[600px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group"
+            className="relative w-full h-[400px] md:h-[600px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onFocus={() => setIsPaused(true)}
@@ -335,19 +335,19 @@ const Home = () => {
                       alt={showcaseWorks[currentSlide].title} 
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover slider-image optimized-img is-loading"
+                      className="w-full h-full object-contain md:object-cover slider-image optimized-img is-loading"
                       onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
                 </motion.div>
             </AnimatePresence>
 
-            <div className="absolute bottom-0 right-0 p-8 md:p-12 z-10 text-white w-full">
+            <div className="absolute bottom-0 right-0 p-4 md:p-8 lg:p-12 z-10 text-white w-full">
                 <motion.h3 
                     key={`title-${currentSlide}`}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="text-3xl md:text-4xl font-bold mb-2"
+                    className="text-xl md:text-3xl lg:text-4xl font-bold mb-2"
                 >
                     {showcaseWorks[currentSlide].title}
                 </motion.h3>
@@ -356,39 +356,41 @@ const Home = () => {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="text-gray-200 text-lg mb-6"
+                    className="text-gray-200 text-sm md:text-lg mb-4 md:mb-6"
                 >
                     {showcaseWorks[currentSlide].desc}
                 </motion.p>
                 
                 <Link to="/works/digital">
-                    <button className="px-6 py-3 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-colors">
+                    <button className="px-4 py-2 md:px-6 md:py-3 bg-white text-black rounded-full text-sm md:text-base font-medium hover:bg-gray-200 transition-colors">
                         استعرض الأعمال
                     </button>
                 </Link>
             </div>
 
-            <div className="absolute bottom-8 left-8 flex gap-3 z-20">
+            <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 flex gap-2 md:gap-3 z-20">
                 <button 
                     onClick={prevSlide} 
-                    className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all border border-white/20"
+                    className="p-2 md:p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all border border-white/20"
                 >
-                    <ChevronRight size={24} />
+                    <ChevronRight size={20} className="md:hidden" />
+                    <ChevronRight size={24} className="hidden md:block" />
                 </button>
                 
                 <button 
                     onClick={nextSlide} 
-                    className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all border border-white/20"
+                    className="p-2 md:p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all border border-white/20"
                 >
-                    <ChevronLeft size={24} />
+                    <ChevronLeft size={20} className="md:hidden" />
+                    <ChevronLeft size={24} className="hidden md:block" />
                 </button>
             </div>
 
-            <div className="absolute top-6 left-6 flex gap-2 z-20">
+            <div className="absolute top-4 left-4 md:top-6 md:left-6 flex gap-2 z-20">
                 {showcaseWorks.map((_, index) => (
                     <div 
                         key={index}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/40'}`}
+                        className={`h-1 md:h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-6 md:w-8 bg-white' : 'w-1.5 md:w-2 bg-white/40'}`}
                     />
                 ))}
             </div>
