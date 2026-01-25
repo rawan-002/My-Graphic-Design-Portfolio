@@ -335,7 +335,7 @@ const Home = () => {
                       alt={showcaseWorks[currentSlide].title} 
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-contain md:object-cover slider-image optimized-img is-loading"
+                      className="w-full h-full object-cover slider-image optimized-img is-loading"
                       onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
