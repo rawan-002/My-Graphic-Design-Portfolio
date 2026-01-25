@@ -3,6 +3,7 @@ import Logo from '../assets/New Logo.png';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Video from '../assets/Video.mp4';
+import VideoPoster from '../assets/video-poster.jpg';
 import MainLayout from '../App';
 const ContactModal = ({ open, onClose }) => {
   if (!open) return null;
@@ -164,7 +165,8 @@ const timelineData = [
               <div className="absolute inset-0 border border-gray-200 dark:border-gray-800 z-10 translate-x-4 translate-y-4 transition-all duration-500"></div>
               
               <video 
-                src={Video} 
+                src={Video}
+                poster={VideoPoster}
                 preload="auto"
                 autoPlay 
                 muted 
@@ -175,12 +177,15 @@ const timelineData = [
                 controls={false}
                 disablePictureInPicture
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out z-20 relative shadow-2xl" 
+                style={{ backgroundColor: '#000' }}
                 onLoadedMetadata={(e) => {
                   e.currentTarget.play().catch(() => {
                     console.log('Video autoplay prevented');
                   });
                 }}
-              />
+              >
+                <img src={VideoPoster} alt="About" className="w-full h-full object-cover grayscale" />
+              </video>
             </div>
           </motion.div>
         </div>
