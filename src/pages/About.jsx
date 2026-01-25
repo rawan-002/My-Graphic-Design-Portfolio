@@ -165,14 +165,21 @@ const timelineData = [
               
               <video 
                 src={Video} 
-                preload="metadata"
+                preload="auto"
                 autoPlay 
                 muted 
                 loop 
                 playsInline
                 webkit-playsinline="true"
                 x5-playsinline="true"
+                controls={false}
+                disablePictureInPicture
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out z-20 relative shadow-2xl" 
+                onLoadedMetadata={(e) => {
+                  e.currentTarget.play().catch(() => {
+                    console.log('Video autoplay prevented');
+                  });
+                }}
               />
             </div>
           </motion.div>
