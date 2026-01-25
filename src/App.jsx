@@ -313,7 +313,7 @@ const Home = () => {
           </div>
 
           <div
-            className="relative w-full h-[400px] md:h-[600px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group"
+            className="relative w-full aspect-square md:aspect-auto md:h-[600px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onFocus={() => setIsPaused(true)}
