@@ -168,7 +168,7 @@ const ThreeScene = () => {
     scene.add(spotLight);
     let myModel = null;
     const loader = new GLTFLoader();
-    loader.load('/aesthetic.glb', (gltf) => {
+    loader.load('/My-Graphic-Design-Portfolio/aesthetic.glb', (gltf) => {
         myModel = gltf.scene;
         myModel.scale.set(0.6, 0.6, 0.6);
         myModel.position.set(0, 0, 0);
