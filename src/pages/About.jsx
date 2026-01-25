@@ -169,7 +169,9 @@ const timelineData = [
                 autoPlay 
                 muted 
                 loop 
-                playsInline 
+                playsInline
+                webkit-playsinline="true"
+                x5-playsinline="true"
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out z-20 relative shadow-2xl" 
               />
             </div>
