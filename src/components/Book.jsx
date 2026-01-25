@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import HTMLFlipBook from "react-pageflip";
 import coverImage from '../assets/Digital/book_pages/1.png'
 import flipSound from '../assets/Digital/sound.m4a'
-import './book.css'
+import './Book.css'
 
 function Book({ pages = [] }) {
   const audioRef = useRef(null);
