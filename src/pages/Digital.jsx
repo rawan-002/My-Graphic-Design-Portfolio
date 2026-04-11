@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion'; 
 import Book from '../components/Book';
 
+// --- Assets Imports ---
 import mlImg from '../assets/Digital/ML.png'; 
 import gamesImg from '../assets/Digital/Games.png';
 import threeDImg from '../assets/Digital/3DD.png';
@@ -10,14 +12,17 @@ import adAbsherImg from '../assets/ADAbsher.png';
 import patternImg from '../assets/Pattern.png';
 import abiaImg from '../assets/Digital/Abia.png'; 
 import sheSaidThatImg from '../assets/Digital/SheSaidThat3.png';
-
 import waqfImg from '../assets/Waqf.png';
 import derieahImg from '../assets/Derieah.png';
 import litrixImg from '../assets/Digital/LitrixLogo.png';
-
 import BannerGreenIMG from '../assets/Digital/RollUpGreen.png';
 import print05Img from '../assets/05.png';
+import logoVars from '../assets/logoVars.png';
+import mainLogo from '../assets/mainLogo.png';
+import TwoCups from '../assets/TwoCups.png';
+import RuknCoffee from '../assets/RuknCoffee.png';
 
+// Book Pages
 import bookPage1 from '../assets/Digital/book_pages/1.png';
 import bookPage2 from '../assets/Digital/book_pages/2.png';
 import bookPage3 from '../assets/Digital/book_pages/3.png';
@@ -33,56 +38,97 @@ import bookPage12 from '../assets/Digital/book_pages/12.png';
 import bookPage13 from '../assets/Digital/book_pages/13.png';
 
 export default function Digital() {
-
   const [selectedImage, setSelectedImage] = useState(null);
+  const mainGridRef = useRef(null);
+  const boxRefs = useRef([]);
+  const [boxPositions, setBoxPositions] = useState([]);
+  
+  // البداية: الصورة الأولى في المربع 0 والثانية في المربع 1 عشان يمرون بكل المربعات باللحاق
+  const [currentBoxIndices, setCurrentBoxIndices] = useState([0, 1]); 
+
+  const [paletteColors, setPaletteColors] = useState([
+    { id: 1, hex: '#a09991' },
+    { id: 2, hex: '#4b3d35' },
+    { id: 3, hex: '#ffffff' },
+    { id: 4, hex: '#d1c8bc' }
+  ]);
+
+  const measurePositions = () => {
+    if (!mainGridRef.current) return;
+    const gridRect = mainGridRef.current.getBoundingClientRect();
+    const positions = boxRefs.current.map((boxRef) => {
+      if (!boxRef) return null;
+      const boxRect = boxRef.getBoundingClientRect();
+      return {
+        x: boxRect.left - gridRect.left,
+        y: boxRect.top - gridRect.top,
+        width: boxRect.width,
+        height: boxRect.height,
+      };
+    }).filter(Boolean);
+    if (positions.length === 4) setBoxPositions(positions);
+  };
+
+  useLayoutEffect(() => {
+    measurePositions();
+    const timer = setTimeout(measurePositions, 200);
+    window.addEventListener('resize', measurePositions);
+    return () => {
+      window.removeEventListener('resize', measurePositions);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    // التحريك المستمر على كل المربعات (0, 1, 2, 3)
+    const moveInterval = setInterval(() => {
+      setCurrentBoxIndices(prev => [
+        (prev[0] + 1) % 4,
+        (prev[1] + 1) % 4
+      ]);
+    }, 2800);
+
+    const paletteInterval = setInterval(() => {
+      setPaletteColors(prev => [...prev].sort(() => Math.random() - 0.5));
+    }, 3500);
+
+    return () => {
+      clearInterval(moveInterval);
+      clearInterval(paletteInterval);
+    };
+  }, []);
 
   const advertisements = [
     { id: 1, title: 'Abia Advertisement', image: abiaImg, description: 'تصميم إعلاني لـ Abia.' },
     { id: 2, title: 'She Said That', image: sheSaidThatImg, description: 'تصميم إعلاني لـ She Said That.' }
-
   ];
 
   const posters = [
     { id: 1, title: 'Machine Learning', image: mlImg, description: 'بوستر ورشة عن الذكاء الاصطناعي' },
     { id: 3, title: '3D Modeling', image: threeDImg, description: 'Thumbnail ثريد على منصة إكس' },
-    { id: 4, title: 'collage', image: collageImg, description: ' هذا الكولاج يبين كيف القيم ما تنبني لحالها، نبنيها مع بعض، يد بيد، وكل واحد فينا يكمّل الثاني عشان تطلع الصورة كاملة' },
+    { id: 4, title: 'collage', image: collageImg, description: 'هذا الكولاج يبين كيف القيم ما تنبني لحالها.' },
     { id: 5, title: 'Absher Advertisement', image: adAbsherImg, description: 'تصميم إعلاني لأبشر' }
-
   ];
 
   const Prints = [
     { id: 1, title: 'GDG Roll Up', image: BannerGreenIMG, description: 'تصميم لافتة (Roll Up) لمؤتمر GDG.' },
     { id: 2, title: 'Print Design', image: print05Img, description: 'تصميم مطبوع' }
   ];
-  const bookPages = [
-    bookPage1, bookPage2, bookPage3, bookPage4, bookPage5, bookPage6, bookPage7, 
-    bookPage8, bookPage9, bookPage10, bookPage11, bookPage12, bookPage13
-  ].map((page, index) => (
-    <div 
-      key={index}
-      className="w-full h-full flex items-center justify-center"
-    >
-      <img
-        src={page}
-        alt={`صفحة ${index + 1}`}
-        loading="lazy"
-        decoding="async"
-        className="w-full h-full object-contain is-loading"
-        style={{ userSelect: 'none', pointerEvents: 'none' }}
-        onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-      />
-    </div>
-  ));
 
   const logos = [
-    { id: 1, title: 'Waqf Logo', image: waqfImg, description: 'تصميم شعار لتطبيق كُن معي لهاكثون وقف.' },
-    { id: 2, title: 'Derieah Logo', image: derieahImg, description: 'هوية بصرية وشعار مستوحاة من منطقة الباحة.' },
+    { id: 1, title: 'Waqf Logo', image: waqfImg, description: 'تصميم شعار لتطبيق كُن معي.' },
+    { id: 2, title: 'Derieah Logo', image: derieahImg, description: 'هوية بصرية مستوحاة من منطقة الباحة.' },
     { id: 3, title: 'Litrix Logo', image: litrixImg, description: 'تصميم شعار تقني لمنصة Litrix.' }
   ];
 
-  const closeLightbox = () => {
-    setSelectedImage(null);
-  };
+  const bookPagesList = [
+    bookPage1, bookPage2, bookPage3, bookPage4, bookPage5, bookPage6, bookPage7, 
+    bookPage8, bookPage9, bookPage10, bookPage11, bookPage12, bookPage13
+  ].map((page, index) => (
+    <div key={index} className="w-full h-full flex items-center justify-center">
+      <img src={page} alt={`Page ${index + 1}`} className="w-full h-full object-contain pointer-events-none" />
+    </div>
+  ));
 
   return (
     <div className="min-h-screen px-6 py-12 max-w-7xl mx-auto" dir="ltr">
@@ -99,27 +145,93 @@ export default function Digital() {
       </div>
 
       <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">
-          Advertisements
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {advertisements.map((ad) => (
-            <div key={ad.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              
-              <div className="aspect-square w-full overflow-hidden bg-gray-50 group flex items-center justify-center relative">
-                <img 
-                  src={ad.image} 
-                  alt={ad.title}
-                  loading="lazy"
-                  decoding="async"
-                  onClick={() => setSelectedImage(ad.image)} 
-                  className="w-full h-full object-contain cursor-pointer hover:scale-105 transition-transform duration-500 absolute inset-0 optimized-img is-loading"
-                  onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-                />
+        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Visual Identity</h2>
+        <div className="bg-[#d9d9d9] p-4 md:p-6 rounded-3xl shadow-sm border border-gray-300">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5">
+            
+            {/* Left Column */}
+            <div className="lg:col-span-6 flex flex-col gap-4 md:gap-5">
+              <div className="bg-[#d1c8bc] h-[250px] md:h-[320px] rounded-2xl flex items-center justify-center relative overflow-hidden group">
+                <img src={mainLogo} onClick={() => setSelectedImage(mainLogo)} className="w-full h-full object-contain cursor-pointer z-20 hover:scale-105 transition-transform duration-500" />
               </div>
 
-              <div className="p-4"> 
-                <h3 className="text-lg font-bold mb-1 text-gray-800">{ad.title}</h3>
+              {/* Moving Color Palette */}
+              <div className="grid grid-cols-4 gap-2 md:gap-4 h-[60px] md:h-[70px]">
+                {paletteColors.map((color) => (
+                  <motion.div
+                    key={color.id}
+                    layout
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    style={{ backgroundColor: color.hex }}
+                    className="rounded-xl shadow-inner border border-black/5"
+                  />
+                ))}
+              </div>
+
+              <div className="bg-[#e6e1ce] h-[180px] md:h-[233px] rounded-2xl flex items-center justify-center relative overflow-hidden group">
+                <img src={logoVars} onClick={() => setSelectedImage(logoVars)} className="w-full h-full object-contain cursor-pointer z-20 hover:scale-105 transition-transform duration-500" />
+              </div>
+            </div>
+
+            {/* Right Column (The All-Square Motion) */}
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 relative min-h-[450px]" ref={mainGridRef}>
+              {[...Array(4)].map((_, i) => (
+                <div 
+                  key={i} 
+                  ref={el => boxRefs.current[i] = el} 
+                  className={`h-full min-h-[210px] rounded-2xl border-2 border-dashed border-gray-400 bg-[#d9d9d9] flex items-center justify-center transition-all duration-700 ${
+                    currentBoxIndices.includes(i) ? 'opacity-0' : 'opacity-40 animate-pulse'
+                  }`}
+                />
+              ))}
+              
+              {boxPositions.length === 4 && (
+                <>
+                  <motion.div
+                    className="absolute overflow-hidden cursor-pointer shadow-2xl rounded-2xl z-30"
+                    animate={{ 
+                      x: boxPositions[currentBoxIndices[0]]?.x || 0, 
+                      y: boxPositions[currentBoxIndices[0]]?.y || 0, 
+                      width: boxPositions[currentBoxIndices[0]]?.width || 0, 
+                      height: boxPositions[currentBoxIndices[0]]?.height || 0
+                    }}
+                    transition={{ type: "spring", stiffness: 90, damping: 18 }}
+                    onClick={() => setSelectedImage(TwoCups)}
+                  >
+                    <img src={TwoCups} className="w-full h-full object-cover" alt="Mockup 1" />
+                  </motion.div>
+
+                  <motion.div
+                    className="absolute overflow-hidden cursor-pointer shadow-2xl rounded-2xl z-30"
+                    animate={{ 
+                      x: boxPositions[currentBoxIndices[1]]?.x || 0, 
+                      y: boxPositions[currentBoxIndices[1]]?.y || 0, 
+                      width: boxPositions[currentBoxIndices[1]]?.width || 0, 
+                      height: boxPositions[currentBoxIndices[1]]?.height || 0
+                    }}
+                    transition={{ type: "spring", stiffness: 90, damping: 18 }}
+                    onClick={() => setSelectedImage(RuknCoffee)}
+                  >
+                    <img src={RuknCoffee} className="w-full h-full object-cover" alt="Mockup 2" />
+                  </motion.div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* بقية الأقسام */}
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Advertisements</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {advertisements.map((ad) => (
+            <div key={ad.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl border border-gray-100">
+              <div className="aspect-square bg-gray-50 flex items-center justify-center relative overflow-hidden">
+                <img src={ad.image} alt={ad.title} onClick={() => setSelectedImage(ad.image)} className="w-full h-full object-contain cursor-pointer hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-bold text-gray-800">{ad.title}</h3>
                 <p className="text-gray-600 text-xs">{ad.description}</p>
               </div>
             </div>
@@ -128,55 +240,16 @@ export default function Digital() {
       </div>
 
       <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">
-          Posters & Art
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 z-10 relative">
-          {posters.map((project) => (
-            <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="h-48 overflow-hidden bg-gray-100 group">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  loading="lazy"
-                  decoding="async"
-                  onClick={() => setSelectedImage(project.image)} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 cursor-pointer optimized-img is-loading"
-                  onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-                />
+        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Posters & Art</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posters.map((p) => (
+            <div key={p.id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="h-48 bg-gray-100 overflow-hidden">
+                <img src={p.image} alt={p.title} onClick={() => setSelectedImage(p.image)} className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{project.title}</h3>
-                <p className="text-gray-600 text-sm">{project.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">
-          Prints
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 z-10 relative">
-          {Prints.map((project) => (
-            <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="h-48 overflow-hidden bg-gray-100 group">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  loading="lazy"
-                  decoding="async"
-                  onClick={() => setSelectedImage(project.image)} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 cursor-pointer optimized-img is-loading"
-                  onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{project.title}</h3>
-                <p className="text-gray-600 text-sm">{project.description}</p>
+                <h3 className="text-xl font-bold text-gray-800">{p.title}</h3>
+                <p className="text-gray-600 text-sm">{p.description}</p>
               </div>
             </div>
           ))}
@@ -184,98 +257,30 @@ export default function Digital() {
       </div>
 
       <div className="mb-16 -mx-6 px-6 py-12 relative">
-        <div className="absolute inset-0 opacity-60" style={{ 
-          backgroundImage: `url(${patternImg})`, 
-          backgroundSize: 'cover', 
-          backgroundPosition: 'center center', 
-          backgroundRepeat: 'no-repeat', 
-          height: '40%', 
-          top: '30%', 
-          bottom: 'auto',
-          maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)'
-        }}></div>
-        <div className="relative z-10">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">
-          Brochures & Guides
-        </h2>
-        
-        <div className="w-full flex flex-col items-center mb-8">
-          <Book 
-            pages={bookPages.slice(1)}
-            width={600}
-            height={420}
-            animationDuration={600}
-            enableFlip={true}
-          />
-
-          <div className="max-w-2xl text-center mt-6" dir="rtl">
-            <p className="text-gray-700 text-base font-medium mb-2">
-              دليل الأمن الرقمي لعائلتك - 13 صفحة
-            </p>
-            <p className="text-gray-500 text-sm">
-              استخدم الأزرار أو اسحب الصفحات أو استخدم الأسهم (← →) للتنقل
-            </p>
-          </div>
-        </div>
+        <div className="absolute inset-0 opacity-60" style={{ backgroundImage: `url(${patternImg})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '40%', top: '30%', maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}></div>
+        <div className="relative z-10 w-full flex flex-col items-center">
+          <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3 self-start">Brochures & Guides</h2>
+          <Book pages={bookPagesList.slice(1)} width={600} height={420} animationDuration={600} enableFlip={true} />
         </div>
       </div>
 
-      <div className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">
-          Logos & Identity
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 z-10 relative">
-          {logos.map((logo) => (
-            <div key={logo.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-              <div className="h-48 overflow-hidden bg-gray-50 group flex items-center justify-center p-4">
-                <img 
-                  src={logo.image} 
-                  alt={logo.title}
-                  loading="lazy"
-                  decoding="async"
-                  onClick={() => setSelectedImage(logo.image)} 
-                  className="w-full h-full object-contain hover:scale-110 transition-transform duration-500 cursor-pointer optimized-img is-loading"
-                  onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-                />
-              </div>
-              <div className="p-6 border-t border-gray-100">
-                <h3 className="text-xl font-bold mb-2 text-gray-800">{logo.title}</h3>
-                <p className="text-gray-600 text-sm">{logo.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-85 p-4 backdrop-blur-sm transition-opacity duration-300"
-          onClick={closeLightbox}
-        >
-          <div 
-            className="relative max-w-5xl w-full h-full flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
+      {/* Lightbox */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4" 
+            onClick={() => setSelectedImage(null)}
           >
-            <button 
-                onClick={closeLightbox}
-                className="absolute top-4 right-4 text-white text-3xl leading-none hover:text-gray-300 focus:outline-none z-10 bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center pb-1"
-            >
-                &times;
-            </button>
-
-            <img 
-              src={selectedImage} 
-              alt="Enlarged view" 
-              loading="lazy"
-              decoding="async"
-              className="max-h-[85vh] max-w-full object-contain rounded shadow-2xl optimized-img is-loading"
-              onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-            />
-          </div>
-        </div>
-      )}
+            <div className="relative max-w-5xl w-full flex items-center justify-center" onClick={e => e.stopPropagation()}>
+              <button onClick={() => setSelectedImage(null)} className="absolute -top-12 right-0 text-white text-4xl">&times;</button>
+              <img src={selectedImage} alt="Full view" className="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Video from '../assets/Video.mp4';
 import VideoPoster from '../assets/video-poster.jpg';
+import AffinityLogo from '../assets/AffinityLogo.png';
+import AlightMotionLogo from '../assets/AlightMotionLogo.png';
+import CanvaLogo from '../assets/CanvaLogo.png';
+import IilustratorLogo from '../assets/IilustratorLogo.png';
 import MainLayout from '../App';
 const ContactModal = ({ open, onClose }) => {
   if (!open) return null;
@@ -93,32 +97,24 @@ export default function About() {
 
 const timelineData = [
   { 
-    year: "2017 - 2021", 
+    year: "2017 - 2022", 
     title: "البداية والشغف",  
     description: "استكشاف عالم التصميم والتركيز على المونتاج والأنيميشن والموشن جرافيك، مع تعلم أساسيات تطبيقات أدوبي وتطبيق المشاريع الصغيرة لبناء المهارات العملية." 
   },
   { 
-    year: "2021", 
+    year: "2022", 
     title: "أول مشروع هوية", 
     description: "تنفيذ أول مشروع متكامل لإنشاء هوية بصرية لعميل محلي، شمل اختيار الألوان، الخطوط، وتنسيق العناصر لضمان هوية متناسقة وواضحة." 
   },
+
   { 
-    year: "2022", 
-    title: "التوسع والاحتراف", 
-    description: "العمل مع وكالات دعاية وإعلان على مشاريع متعددة، تطوير مهارات التفكير الإبداعي، وتحسين القدرة على إدارة الوقت وتنظيم المخرجات التصميمية بشكل احترافي." 
-  },
-  { 
-    year: "2023", 
+    year: "2023 - 2025", 
     title: "Design Team Leader - GDSCBU", 
     description: "قيادة فريق التصميم، توزيع المهام، مراجعة الأعمال، وضمان تناسق وجودة المخرجات البصرية. الإشراف على جميع المشاريع والتأكد من أن الهوية الرقمية للنادي مطبقة بشكل صحيح واحترافي، مع تحسين طريقة العمل بين الفريق وتنظيم الملفات والتسليمات." 
   },
+
   { 
-    year: "2024", 
-    title: "مصمم أول (Senior)", 
-    description: "قيادة مشاريع تصميمية والإشراف على التوجه الفني لكل مخرجات التصميم، مع التركيز على الجودة، الاتساق البصري، وتنفيذ حلول تصميمية عملية تلبي أهداف المشروع." 
-  },
-  { 
-    year: "2025", 
+    year: "2026", 
     title: "الآن", 
     description: "صناعة تجارب بصرية فريدة، تقديم استشارات في الهوية الرقمية، والإشراف على مشاريع تصميمية متنوعة لضمان النتائج." 
   },
@@ -148,11 +144,11 @@ const timelineData = [
             <h1 className="text-5xl md:text-6xl font-black leading-tight">
               فوضى مُنظمة <br/> تُنتج <span className="italic font-light">جمالاً.</span>
             </h1>
-<motion.p className="text-xl leading-relaxed font-light max-w-lg" dir="rtl">
-  انا روان, مصممة جرافيك متخصّصة في بناء الهويات البصرية. أؤمن أن التصميم ليس مجرد ألوان وأشكال، بل هو لغة صامتة تروي قصة العلامة وتخلد أثرها في الذاكرة. أعمل بدقة الـ 
+            <p className="text-xl leading-relaxed font-light max-w-lg" dir="rtl">
+  أنا روان، مصممة جرافيك و احيانًا مبرمجة.. متخصّصة في بناء الهويات البصرية. أتعامل مع التصميم كأداة تعكس هوية العلامة وتبرزها بشكل واضح وثابت، وأشتغل بدقة الـ 
   <span style={{ fontFamily: '"Press Start 2P", monospace', fontSize: '12px', letterSpacing: '0.06em' }}> PIXEL </span>
-  وشغف الفنان.
-</motion.p>
+  مع حس فني يعطي لكل عنصر قيمته.
+</p>
           </motion.div>
 
           <motion.div 
@@ -191,15 +187,60 @@ const timelineData = [
         </div>
       </div>
 
-      <div className="min-h-screen px-6 py-24 flex flex-col items-center justify-center">
+      <div className="min-h-screen px-6 py-10 flex flex-col items-center justify-center">
         <motion.div 
           style={{ color: textColor }}
           className="max-w-4xl w-full mx-auto"
         >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="mt-6"
+          >
+            <h2 className="text-3xl font-bold mb-8 text-center">أدوات التصميم</h2>
+            <p className="text-gray-400 font-light text-sm leading-relaxed max-w-2xl mx-auto text-center">
+              أستخدم مجموعة من أدوات التصميم لإنشاء أعمالي الإبداعية، بما في ذلك Affinity للتصميم الجرافيكي، Canva للتصاميم البسيطة والسريعة، و Alight Motion للمونتاج والأنيميشن.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 mb-24">
+              <motion.img
+                src={AffinityLogo}
+                alt="Affinity"
+                className="h-14 w-auto object-contain"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
+                whileHover={{ scale: 1.08, y: -4 }}
+              />
+              <motion.img
+                src={CanvaLogo}
+                alt="Canva"
+                className="h-14 w-auto object-contain"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut', delay: 0.2 }}
+                whileHover={{ scale: 1.08, y: -4 }}
+              />
+              <motion.img
+                src={AlightMotionLogo}
+                alt="Alight Motion"
+                className="h-16 w-auto object-contain"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut', delay: 0.4 }}
+                whileHover={{ scale: 1.08, y: -4 }}
+              />
+              <motion.img
+                src={IilustratorLogo}
+                alt="Illustrator"
+                className="h-16 w-auto object-contain"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut', delay: 0.6 }}
+                whileHover={{ scale: 1.08, y: -4 }}
+              />
+            </div>
+          </motion.div>
+
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold mb-16 text-center border-b border-gray-800 pb-4 inline-block mx-auto w-full"
+            className="text-3xl font-bold mt-12 mb-24 text-center border-b border-gray-800 pb-4 inline-block mx-auto w-full"
           >
             رحلتي الإبداعية
           </motion.h2>
