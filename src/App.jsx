@@ -2,18 +2,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Mail, Linkedin, ExternalLink, Phone, ChevronRight, ChevronLeft } from 'lucide-react'; 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import Logo from './assets/New Logo.png'; 
+import Logo from './assets/New Logo.webp';
 import { Routes, Route, Link, Outlet, useLocation } from 'react-router-dom';
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 const About = lazy(() => import('./pages/About'));
 const Digital = lazy(() => import('./pages/Digital'));
 const PrintWorks = lazy(() => import('./pages/Print'));
 
-import ThreeImg from './assets/3D.png';
-import PhoneImg from './assets/Digital/Phone.png';
-import AbiaImg from './assets/Digital/Abia2.png';
-import DigitalImg from './assets/Digital.png';
-import SheSaidThatMockUp from './assets/SheSaidThatMockUp.png';
+import ThreeImg from './assets/3D.webp';
+import PhoneImg from './assets/Digital/Phone.webp';
+import AbiaImg from './assets/Digital/Abia2.webp';
+import SheSaidThatMockUp from './assets/SheSaidThatMockUp.webp';
 
 
 const ContactModal = ({ open, onClose }) => {
@@ -62,7 +61,7 @@ const Navbar = ({ onContactOpen }) => {
       <nav className="fixed w-full top-0 bg-white/80 backdrop-blur-md z-40 border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3">
-            <img src={Logo} alt="Logo" loading="lazy" decoding="async" className="h-10 w-auto md:h-12 is-loading" onLoad={(e) => e.currentTarget.classList.remove('is-loading')} />
+            <img src={Logo} alt="Logo" decoding="async" className="h-10 w-auto md:h-12" />
             <span className="text-lg font-bold text-gray-900">Rawan</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -168,7 +167,7 @@ const ThreeScene = () => {
     scene.add(spotLight);
     let myModel = null;
     const loader = new GLTFLoader();
-    loader.load('/My-Graphic-Design-Portfolio/aesthetic.glb', (gltf) => {
+    loader.load(`${import.meta.env.BASE_URL}aesthetic.glb`, (gltf) => {
         myModel = gltf.scene;
         myModel.scale.set(0.6, 0.6, 0.6);
         myModel.position.set(0, 0, 0);
@@ -189,9 +188,11 @@ const ThreeScene = () => {
       targetRotX = mouseY * 0.5;
       targetRotY = mouseX * 0.5;
     };
-    containerRef.current.addEventListener('mousemove', handleMouseMove);
+    const container = containerRef.current;
+    container.addEventListener('mousemove', handleMouseMove);
+    let frameId;
     const animate = () => {
-      requestAnimationFrame(animate);
+      frameId = requestAnimationFrame(animate);
       if (myModel) {
         myModel.rotation.x += (targetRotX - myModel.rotation.x) * 0.1;
         myModel.rotation.y += (targetRotY - myModel.rotation.y) * 0.1;
@@ -210,13 +211,25 @@ const ThreeScene = () => {
     };
     window.addEventListener('resize', handleResize);
     return () => {
-      if (containerRef.current) {
-        containerRef.current.removeEventListener('mousemove', handleMouseMove);
-      }
+      cancelAnimationFrame(frameId);
+      container.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
-      if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
-        containerRef.current.removeChild(renderer.domElement);
+      if (renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
       }
+      scene.traverse((obj) => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
+          materials.forEach((m) => {
+            Object.values(m).forEach((v) => {
+              if (v && typeof v.dispose === 'function') v.dispose();
+            });
+            m.dispose();
+          });
+        }
+      });
+      renderer.dispose();
     };
   }, []);
   return (

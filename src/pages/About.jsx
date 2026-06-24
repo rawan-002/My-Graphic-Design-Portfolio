@@ -1,13 +1,12 @@
 import React, { useRef, useState } from 'react';
-import Logo from '../assets/New Logo.png';
+import Logo from '../assets/New Logo.webp';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Video from '../assets/Video.mp4';
-import VideoPoster from '../assets/video-poster.jpg';
-import AffinityLogo from '../assets/AffinityLogo.png';
-import AlightMotionLogo from '../assets/AlightMotionLogo.png';
-import CanvaLogo from '../assets/CanvaLogo.png';
-import IilustratorLogo from '../assets/IilustratorLogo.png';
+import ModelViewer from '../components/ModelViewer';
+import AffinityLogo from '../assets/AffinityLogo.webp';
+import AlightMotionLogo from '../assets/AlightMotionLogo.webp';
+import CanvaLogo from '../assets/CanvaLogo.webp';
+import IilustratorLogo from '../assets/IilustratorLogo.webp';
 import MainLayout from '../App';
 const ContactModal = ({ open, onClose }) => {
   if (!open) return null;
@@ -157,31 +156,17 @@ const timelineData = [
             transition={{ duration: 0.8 }}
             className="relative flex justify-center"
           >
-            <div className="relative w-full max-w-md aspect-[4/5] overflow-hidden">
-              <div className="absolute inset-0 border border-gray-200 dark:border-gray-800 z-10 translate-x-4 translate-y-4 transition-all duration-500"></div>
-              
-              <video 
-                src={Video}
-                poster={VideoPoster}
-                preload="auto"
-                autoPlay 
-                muted 
-                loop 
-                playsInline
-                webkit-playsinline="true"
-                x5-playsinline="true"
-                controls={false}
-                disablePictureInPicture
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out z-20 relative shadow-2xl" 
-                style={{ backgroundColor: '#000' }}
-                onLoadedMetadata={(e) => {
-                  e.currentTarget.play().catch(() => {
-                    console.log('Video autoplay prevented');
-                  });
-                }}
-              >
-                <img src={VideoPoster} alt="About" className="w-full h-full object-cover grayscale" />
-              </video>
+            <div className="relative w-full max-w-md aspect-[4/5] flex items-center justify-center">
+              <ModelViewer
+                modelPath={`${import.meta.env.BASE_URL}watercolor-set.glb`}
+                autoRotate={true}
+                faceCamera={false}
+                fitScale={2.9}
+                rotateSpeed={0.0018}
+                followMouse={false}
+                tilt={0.35}
+                className="absolute inset-0 z-20 select-none"
+              />
             </div>
           </motion.div>
         </div>

@@ -4,38 +4,49 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Book from '../components/Book';
 
 // --- Assets Imports ---
-import mlImg from '../assets/Digital/ML.png'; 
-import gamesImg from '../assets/Digital/Games.png';
-import threeDImg from '../assets/Digital/3DD.png';
-import collageImg from '../assets/Digital/Collage.png';
-import adAbsherImg from '../assets/ADAbsher.png';
-import patternImg from '../assets/Pattern.png';
-import abiaImg from '../assets/Digital/Abia.png'; 
-import sheSaidThatImg from '../assets/Digital/SheSaidThat3.png';
-import waqfImg from '../assets/Waqf.png';
-import derieahImg from '../assets/Derieah.png';
-import litrixImg from '../assets/Digital/LitrixLogo.png';
-import BannerGreenIMG from '../assets/Digital/RollUpGreen.png';
-import print05Img from '../assets/05.png';
-import logoVars from '../assets/logoVars.png';
-import mainLogo from '../assets/mainLogo.png';
-import TwoCups from '../assets/TwoCups.png';
-import RuknCoffee from '../assets/RuknCoffee.png';
+import mlImg from '../assets/Digital/ML.webp';
+import gamesImg from '../assets/Digital/Games.webp';
+import threeDImg from '../assets/Digital/3DD.webp';
+import collageImg from '../assets/Digital/Collage.webp';
+import adAbsherImg from '../assets/ADAbsher.webp';
+import patternImg from '../assets/Pattern.webp';
+import abiaImg from '../assets/Digital/Abia.webp';
+import sheSaidThatImg from '../assets/Digital/SheSaidThat3.webp';
+import waqfImg from '../assets/Waqf.webp';
+import derieahImg from '../assets/Derieah.webp';
+import litrixImg from '../assets/Digital/LitrixLogo.webp';
+import BannerGreenIMG from '../assets/Digital/RollUpGreen.webp';
+import print05Img from '../assets/05.webp';
+import logoVars from '../assets/logoVars.webp';
+import mainLogo from '../assets/mainLogo.webp';
+import TwoCups from '../assets/TwoCups.webp';
+import RuknCoffee from '../assets/RuknCoffee.webp';
+import visualMain from '../assets/Visual/main1.webp';
+import visualRollup from '../assets/rollllllup.webp';
+import cyberPoster from '../assets/CybersecurityPoster.webp';
+import rifaaPattern from '../assets/rifaaPattern.webp';
+
+// Visual Identity booklet (exported page images)
+import vbPage1 from '../assets/VisualBook/2.webp';
+import vbPage2 from '../assets/VisualBook/3.webp';
+import vbPage3 from '../assets/VisualBook/4.webp';
+import vbPage4 from '../assets/VisualBook/5.webp';
+import vbPage5 from '../assets/VisualBook/6.webp';
 
 // Book Pages
-import bookPage1 from '../assets/Digital/book_pages/1.png';
-import bookPage2 from '../assets/Digital/book_pages/2.png';
-import bookPage3 from '../assets/Digital/book_pages/3.png';
-import bookPage4 from '../assets/Digital/book_pages/4.png';
-import bookPage5 from '../assets/Digital/book_pages/5.png';
-import bookPage6 from '../assets/Digital/book_pages/6.png';
-import bookPage7 from '../assets/Digital/book_pages/7.png';
-import bookPage8 from '../assets/Digital/book_pages/8.png';
-import bookPage9 from '../assets/Digital/book_pages/9.png';
-import bookPage10 from '../assets/Digital/book_pages/10.png';
-import bookPage11 from '../assets/Digital/book_pages/11.png';
-import bookPage12 from '../assets/Digital/book_pages/12.png';
-import bookPage13 from '../assets/Digital/book_pages/13.png';
+import bookPage1 from '../assets/Digital/book_pages/1.webp';
+import bookPage2 from '../assets/Digital/book_pages/2.webp';
+import bookPage3 from '../assets/Digital/book_pages/3.webp';
+import bookPage4 from '../assets/Digital/book_pages/4.webp';
+import bookPage5 from '../assets/Digital/book_pages/5.webp';
+import bookPage6 from '../assets/Digital/book_pages/6.webp';
+import bookPage7 from '../assets/Digital/book_pages/7.webp';
+import bookPage8 from '../assets/Digital/book_pages/8.webp';
+import bookPage9 from '../assets/Digital/book_pages/9.webp';
+import bookPage10 from '../assets/Digital/book_pages/10.webp';
+import bookPage11 from '../assets/Digital/book_pages/11.webp';
+import bookPage12 from '../assets/Digital/book_pages/12.webp';
+import bookPage13 from '../assets/Digital/book_pages/13.webp';
 
 export default function Digital() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -51,6 +62,13 @@ export default function Digital() {
     { id: 2, hex: '#4b3d35' },
     { id: 3, hex: '#ffffff' },
     { id: 4, hex: '#d1c8bc' }
+  ]);
+
+  const [palette2Colors, setPalette2Colors] = useState([
+    { id: 1, hex: '#081627' },
+    { id: 2, hex: '#25616f' },
+    { id: 3, hex: '#449e78' },
+    { id: 4, hex: '#57a1e6' }
   ]);
 
   const measurePositions = () => {
@@ -90,6 +108,7 @@ export default function Digital() {
 
     const paletteInterval = setInterval(() => {
       setPaletteColors(prev => [...prev].sort(() => Math.random() - 0.5));
+      setPalette2Colors(prev => [...prev].sort(() => Math.random() - 0.5));
     }, 3500);
 
     return () => {
@@ -107,7 +126,8 @@ export default function Digital() {
     { id: 1, title: 'Machine Learning', image: mlImg, description: 'بوستر ورشة عن الذكاء الاصطناعي' },
     { id: 3, title: '3D Modeling', image: threeDImg, description: 'Thumbnail ثريد على منصة إكس' },
     { id: 4, title: 'collage', image: collageImg, description: 'هذا الكولاج يبين كيف القيم ما تنبني لحالها.' },
-    { id: 5, title: 'Absher Advertisement', image: adAbsherImg, description: 'تصميم إعلاني لأبشر' }
+    { id: 5, title: 'Absher Advertisement', image: adAbsherImg, description: 'تصميم إعلاني لأبشر' },
+    { id: 6, title: 'Cybersecurity Workshop', image: cyberPoster, description: 'بوستر ورشة عن الأمن السيبراني' }
   ];
 
   const Prints = [
@@ -122,11 +142,17 @@ export default function Digital() {
   ];
 
   const bookPagesList = [
-    bookPage1, bookPage2, bookPage3, bookPage4, bookPage5, bookPage6, bookPage7, 
+    bookPage1, bookPage2, bookPage3, bookPage4, bookPage5, bookPage6, bookPage7,
     bookPage8, bookPage9, bookPage10, bookPage11, bookPage12, bookPage13
   ].map((page, index) => (
     <div key={index} className="w-full h-full flex items-center justify-center">
       <img src={page} alt={`Page ${index + 1}`} className="w-full h-full object-contain pointer-events-none" />
+    </div>
+  ));
+
+  const vbPagesList = [vbPage1, vbPage2, vbPage3, vbPage4, vbPage5].map((page, index) => (
+    <div key={index} className="w-full h-full flex items-center justify-center">
+      <img src={page} alt={`Booklet Page ${index + 1}`} className="w-full h-full object-cover pointer-events-none" />
     </div>
   ));
 
@@ -221,6 +247,74 @@ export default function Digital() {
         </div>
       </div>
 
+      {/* هوية بصرية ثانية */}
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Visual Identity</h2>
+        <div className="bg-[#d9d9d9] p-4 md:p-6 rounded-3xl shadow-sm border border-gray-300 relative overflow-hidden">
+          {/* Heritage pattern backdrop */}
+          <div
+            className="absolute inset-0 z-0 pointer-events-none opacity-50"
+            style={{ backgroundImage: `url(${rifaaPattern})`, backgroundRepeat: 'repeat', backgroundSize: 'auto 36px' }}
+          />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5">
+
+            {/* Banner */}
+            <div className="lg:col-span-6 bg-[#d1c8bc] h-[250px] md:h-[320px] rounded-2xl flex items-center justify-center relative overflow-hidden group">
+              <img
+                src={visualMain}
+                onClick={() => setSelectedImage(visualMain)}
+                className="w-full h-full object-cover cursor-pointer z-20 hover:scale-105 transition-transform duration-500"
+                alt="Visual Identity"
+              />
+            </div>
+
+            {/* Poster (Roll Up) */}
+            <div className="lg:col-span-6 bg-[#237676] h-[250px] md:h-[320px] rounded-2xl flex items-center justify-center relative overflow-hidden group">
+              <div
+                className="absolute inset-0 z-0 pointer-events-none opacity-40"
+                style={{ backgroundImage: `url(${rifaaPattern})`, backgroundRepeat: 'repeat', backgroundSize: 'auto 32px' }}
+              />
+              <img
+                src={visualRollup}
+                onClick={() => setSelectedImage(visualRollup)}
+                className="w-full h-full object-contain cursor-pointer z-20 hover:scale-105 transition-transform duration-500 p-4"
+                alt="Roll Up"
+              />
+            </div>
+          </div>
+
+          {/* Brand color palette */}
+          <div className="relative z-10 mt-4 md:mt-5 grid grid-cols-4 gap-2 md:gap-4 h-[60px] md:h-[70px]">
+            {palette2Colors.map((color) => (
+              <motion.div
+                key={color.id}
+                layout
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                style={{ backgroundColor: color.hex }}
+                className="rounded-xl shadow-inner border border-black/5"
+              />
+            ))}
+          </div>
+
+          {/* Booklet - full width below */}
+          <div className="relative z-10 mt-5 md:mt-6 w-full flex justify-center py-4">
+            <Book
+              bleed
+              size="stretch"
+              cover={vbPage1}
+              pages={vbPagesList.slice(1)}
+              width={560}
+              height={315}
+              minWidth={300}
+              maxWidth={560}
+              minHeight={169}
+              maxHeight={315}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* بقية الأقسام */}
       <div className="mb-16">
         <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Advertisements</h2>
@@ -260,7 +354,7 @@ export default function Digital() {
         <div className="absolute inset-0 opacity-60" style={{ backgroundImage: `url(${patternImg})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '40%', top: '30%', maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}></div>
         <div className="relative z-10 w-full flex flex-col items-center">
           <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3 self-start">Brochures & Guides</h2>
-          <Book pages={bookPagesList.slice(1)} width={600} height={420} animationDuration={600} enableFlip={true} />
+          <Book pages={bookPagesList.slice(1)} />
         </div>
       </div>
 

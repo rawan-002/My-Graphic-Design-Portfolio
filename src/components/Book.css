@@ -13,6 +13,18 @@
   height: 100%;
 }
 
+/* full-bleed pages: image fills the whole page, no white margins */
+.page-content.bleed {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.page-content.bleed > * {
+  width: 100%;
+  height: 100%;
+}
+
 .page-content {
   width: 100%;
   height: 100%;

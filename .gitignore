@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Design source files & unused originals (not needed to build the site)
+*.af
+*~lock~
+src/assets/PDF.pdf
+src/assets/PDF_pages/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

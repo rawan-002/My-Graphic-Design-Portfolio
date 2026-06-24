@@ -1,10 +1,21 @@
 import React, { useRef } from 'react'
 import HTMLFlipBook from "react-pageflip";
-import coverImage from '../assets/Digital/book_pages/1.png'
+import coverImage from '../assets/Digital/book_pages/1.webp'
 import flipSound from '../assets/Digital/sound.m4a'
 import './Book.css'
 
-function Book({ pages = [] }) {
+function Book({
+  pages = [],
+  cover = coverImage,
+  width = 370,
+  height = 500,
+  bleed = false,
+  size = 'fixed',
+  minWidth = 0,
+  maxWidth = 0,
+  minHeight = 0,
+  maxHeight = 0,
+}) {
   const audioRef = useRef(null);
 
   const allPages = [...pages];
@@ -25,24 +36,28 @@ function Book({ pages = [] }) {
     <audio ref={audioRef} preload="auto">
       <source src={flipSound} type="audio/mp4" />
     </audio>
-    <HTMLFlipBook 
-      width={370} 
-      height={500}
+    <HTMLFlipBook
+      width={width}
+      height={height}
+      size={size}
+      minWidth={minWidth || width}
+      maxWidth={maxWidth || width}
+      minHeight={minHeight || height}
+      maxHeight={maxHeight || height}
       maxShadowOpacity={0.8}
       drawShadow={true}
       showCover={false}
-      size='fixed'
       onFlip={playFlipSound}
     >
       <div className="page cover-page">
         <div className="page-content cover">
-          <img src={coverImage} alt="Book Cover" loading="lazy" decoding="async" className="optimized-img is-loading" onLoad={(e) => e.currentTarget.classList.remove('is-loading')} />
+          <img src={cover} alt="Book Cover" loading="lazy" decoding="async" className="optimized-img is-loading" onLoad={(e) => e.currentTarget.classList.remove('is-loading')} />
         </div>
       </div>
 
       {allPages.map((page, index) => (
         <div className="page" key={index}>
-          <div className="page-content">
+          <div className={`page-content${bleed ? ' bleed' : ''}`}>
             {page}
           </div>
         </div>
