@@ -13,6 +13,8 @@ import ThreeImg from './assets/3D.webp';
 import PhoneImg from './assets/Digital/Phone.webp';
 import AbiaImg from './assets/Digital/Abia2.webp';
 import SheSaidThatMockUp from './assets/SheSaidThatMockUp.webp';
+import VisualIdentity1 from './assets/mainLogo.webp';
+import VisualIdentity2 from './assets/Visual/main1.webp';
 
 
 const ContactModal = ({ open, onClose }) => {
@@ -266,6 +268,18 @@ const Home = () => {
       image: AbiaImg,
       title: 'تصميم بوستر إعلان',
       desc: ''
+    },
+    {
+      id: 4,
+      image: VisualIdentity1,
+      title: 'هوية بصرية',
+      desc: 'تصميم هوية بصرية متكاملة.'
+    },
+    {
+      id: 5,
+      image: VisualIdentity2,
+      title: 'هوية بصرية',
+      desc: 'تصميم هوية بصرية متكاملة.'
     },
   ];
 
