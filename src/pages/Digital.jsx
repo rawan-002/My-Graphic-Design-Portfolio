@@ -350,11 +350,45 @@ export default function Digital() {
         </div>
       </div>
 
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Prints</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Prints.map((project) => (
+            <div key={project.id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="h-48 bg-gray-100 overflow-hidden">
+                <img src={project.image} alt={project.title} onClick={() => setSelectedImage(project.image)} className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800">{project.title}</h3>
+                <p className="text-gray-600 text-sm">{project.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="mb-16 -mx-6 px-6 py-12 relative">
         <div className="absolute inset-0 opacity-60" style={{ backgroundImage: `url(${patternImg})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '40%', top: '30%', maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}></div>
         <div className="relative z-10 w-full flex flex-col items-center">
           <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3 self-start">Brochures & Guides</h2>
           <Book pages={bookPagesList.slice(1)} />
+        </div>
+      </div>
+
+      <div className="mb-16">
+        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Logos & Identity</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {logos.map((logo) => (
+            <div key={logo.id} className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+              <div className="h-48 bg-gray-50 overflow-hidden flex items-center justify-center p-4">
+                <img src={logo.image} alt={logo.title} onClick={() => setSelectedImage(logo.image)} className="w-full h-full object-contain cursor-pointer hover:scale-110 transition-transform duration-500" />
+              </div>
+              <div className="p-6 border-t border-gray-100">
+                <h3 className="text-xl font-bold text-gray-800">{logo.title}</h3>
+                <p className="text-gray-600 text-sm">{logo.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
