@@ -268,6 +268,16 @@ const Home = () => {
       title: 'تصميم بوستر إعلان',
       desc: ''
     },
+    {
+      id: 4,
+      node: <VisualIdentitySections only={1} showHeading={false} />,
+      title: 'هوية بصرية',
+    },
+    {
+      id: 5,
+      node: <VisualIdentitySections only={2} showHeading={false} />,
+      title: 'هوية بصرية',
+    },
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -327,37 +337,52 @@ const Home = () => {
           </div>
 
           <div
-            className="relative w-full aspect-square md:aspect-auto md:h-[600px] bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group"
+            className={`relative w-full bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 group ${showcaseWorks[currentSlide].node ? '' : 'aspect-square md:aspect-auto md:h-[600px]'}`}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onFocus={() => setIsPaused(true)}
             onBlur={() => setIsPaused(false)}
             tabIndex={0}
           >
-            
+
             <AnimatePresence mode='wait'>
-                <motion.div 
-                    key={currentSlide}
-                    initial={{ opacity: 0, scale: 1.05 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0"
-                >
-                    <img 
-                      src={showcaseWorks[currentSlide].image} 
-                      alt={showcaseWorks[currentSlide].title} 
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover slider-image optimized-img is-loading"
-                      onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-                </motion.div>
+                {showcaseWorks[currentSlide].node ? (
+                  <motion.div
+                      key={currentSlide}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="relative w-full bg-[#f5f5f5] p-4 md:p-8"
+                      dir="ltr"
+                  >
+                      {showcaseWorks[currentSlide].node}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                      key={currentSlide}
+                      initial={{ opacity: 0, scale: 1.05 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="absolute inset-0"
+                  >
+                      <img
+                        src={showcaseWorks[currentSlide].image}
+                        alt={showcaseWorks[currentSlide].title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover slider-image optimized-img is-loading"
+                        onLoad={(e) => e.currentTarget.classList.remove('is-loading')}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
+                  </motion.div>
+                )}
             </AnimatePresence>
 
+            {!showcaseWorks[currentSlide].node && (
             <div className="absolute bottom-0 right-0 p-4 md:p-8 lg:p-12 z-10 text-white w-full">
-                <motion.h3 
+                <motion.h3
                     key={`title-${currentSlide}`}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -365,7 +390,7 @@ const Home = () => {
                 >
                     {showcaseWorks[currentSlide].title}
                 </motion.h3>
-                <motion.p 
+                <motion.p
                     key={`desc-${currentSlide}`}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -374,37 +399,38 @@ const Home = () => {
                 >
                     {showcaseWorks[currentSlide].desc}
                 </motion.p>
-                
+
                 <Link to="/works/digital">
                     <button className="px-4 py-2 md:px-6 md:py-3 bg-white text-black rounded-full text-sm md:text-base font-medium hover:bg-gray-200 transition-colors">
                         استعرض الأعمال
                     </button>
                 </Link>
             </div>
+            )}
 
             <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 flex gap-2 md:gap-3 z-20">
-                <button 
-                    onClick={prevSlide} 
-                    className="p-2 md:p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all border border-white/20"
+                <button
+                    onClick={prevSlide}
+                    className="p-2 md:p-3 bg-black/40 backdrop-blur-md rounded-full text-white hover:bg-black/70 transition-all border border-white/20"
                 >
                     <ChevronRight size={20} className="md:hidden" />
                     <ChevronRight size={24} className="hidden md:block" />
                 </button>
-                
-                <button 
-                    onClick={nextSlide} 
-                    className="p-2 md:p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all border border-white/20"
+
+                <button
+                    onClick={nextSlide}
+                    className="p-2 md:p-3 bg-black/40 backdrop-blur-md rounded-full text-white hover:bg-black/70 transition-all border border-white/20"
                 >
                     <ChevronLeft size={20} className="md:hidden" />
                     <ChevronLeft size={24} className="hidden md:block" />
                 </button>
             </div>
 
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 flex gap-2 z-20">
+            <div className="absolute top-4 left-4 md:top-6 md:left-6 flex gap-2 z-20 bg-black/30 backdrop-blur-md px-2 py-1 rounded-full">
                 {showcaseWorks.map((_, index) => (
-                    <div 
+                    <div
                         key={index}
-                        className={`h-1 md:h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-6 md:w-8 bg-white' : 'w-1.5 md:w-2 bg-white/40'}`}
+                        className={`h-1 md:h-1.5 rounded-full transition-all duration-300 self-center ${index === currentSlide ? 'w-6 md:w-8 bg-white' : 'w-1.5 md:w-2 bg-white/40'}`}
                     />
                 ))}
             </div>
@@ -415,11 +441,6 @@ const Home = () => {
             <Link to="/works/digital" className="inline-flex items-center text-sm font-medium hover:underline gap-1">
                 عرض جميع الأعمال <ChevronLeft size={16} />
             </Link>
-          </div>
-
-          {/* Full Visual Identity boxes */}
-          <div className="mt-16" dir="ltr">
-            <VisualIdentitySections />
           </div>
 
         </div>

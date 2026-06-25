@@ -18,7 +18,9 @@ import vbPage3 from '../assets/VisualBook/4.webp';
 import vbPage4 from '../assets/VisualBook/5.webp';
 import vbPage5 from '../assets/VisualBook/6.webp';
 
-export default function VisualIdentitySections() {
+export default function VisualIdentitySections({ only = 0, showHeading = true }) {
+  const showFirst = only === 0 || only === 1;
+  const showSecond = only === 0 || only === 2;
   const [selectedImage, setSelectedImage] = useState(null);
   const mainGridRef = useRef(null);
   const boxRefs = useRef([]);
@@ -93,8 +95,9 @@ export default function VisualIdentitySections() {
   return (
     <>
       {/* Visual Identity #1 */}
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Visual Identity</h2>
+      {showFirst && (
+      <div className="mb-16 last:mb-0">
+        {showHeading && <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Visual Identity</h2>}
         <div className="bg-[#d9d9d9] p-4 md:p-6 rounded-3xl shadow-sm border border-gray-300">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5">
 
@@ -169,10 +172,12 @@ export default function VisualIdentitySections() {
           </div>
         </div>
       </div>
+      )}
 
       {/* Visual Identity #2 */}
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Visual Identity</h2>
+      {showSecond && (
+      <div className="mb-16 last:mb-0">
+        {showHeading && <h2 className="text-2xl font-bold mb-6 text-black-700 border-l-4 border-black-700 pl-3">Visual Identity</h2>}
         <div className="bg-[#d9d9d9] p-4 md:p-6 rounded-3xl shadow-sm border border-gray-300 relative overflow-hidden">
           {/* Heritage pattern backdrop */}
           <div
@@ -237,6 +242,7 @@ export default function VisualIdentitySections() {
           </div>
         </div>
       </div>
+      )}
 
       {/* Lightbox */}
       <AnimatePresence>
