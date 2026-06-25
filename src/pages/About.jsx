@@ -98,7 +98,7 @@ const timelineData = [
   { 
     year: "2017 - 2022", 
     title: "البداية والشغف",  
-    description: "استكشاف عالم التصميم والتركيز على المونتاج والأنيميشن والموشن جرافيك، مع تعلم أساسيات تطبيقات أدوبي وتطبيق المشاريع الصغيرة لبناء المهارات العملية." 
+    description: "استكشاف عالم التصميم والتركيز على المونتاج، مع تعلم أساسيات تطبيقات أدوبي وتطبيق المشاريع الصغيرة لبناء المهارات العملية."
   },
   { 
     year: "2022", 
@@ -184,7 +184,7 @@ const timelineData = [
           >
             <h2 className="text-3xl font-bold mb-8 text-center">أدوات التصميم</h2>
             <p className="text-gray-400 font-light text-sm leading-relaxed max-w-2xl mx-auto text-center">
-              أستخدم مجموعة من أدوات التصميم لإنشاء أعمالي الإبداعية، بما في ذلك Affinity للتصميم الجرافيكي، Canva للتصاميم البسيطة والسريعة، و Alight Motion للمونتاج والأنيميشن.
+              أستخدم مجموعة من أدوات التصميم لإنشاء أعمالي الإبداعية، بما في ذلك Affinity للتصميم الجرافيكي، Canva للتصاميم البسيطة والسريعة، و Alight Motion للمونتاج.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 mb-24">
               <motion.img
