@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import Logo from './assets/New Logo.webp';
 import { Routes, Route, Link, Outlet, useLocation } from 'react-router-dom';
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import VisualIdentitySections from './components/VisualIdentitySections';
 const About = lazy(() => import('./pages/About'));
 const Digital = lazy(() => import('./pages/Digital'));
 const PrintWorks = lazy(() => import('./pages/Print'));
@@ -13,8 +14,6 @@ import ThreeImg from './assets/3D.webp';
 import PhoneImg from './assets/Digital/Phone.webp';
 import AbiaImg from './assets/Digital/Abia2.webp';
 import SheSaidThatMockUp from './assets/SheSaidThatMockUp.webp';
-import VisualIdentity1 from './assets/mainLogo.webp';
-import VisualIdentity2 from './assets/Visual/main1.webp';
 
 
 const ContactModal = ({ open, onClose }) => {
@@ -269,18 +268,6 @@ const Home = () => {
       title: 'تصميم بوستر إعلان',
       desc: ''
     },
-    {
-      id: 4,
-      image: VisualIdentity1,
-      title: 'هوية بصرية',
-      desc: 'تصميم هوية بصرية متكاملة.'
-    },
-    {
-      id: 5,
-      image: VisualIdentity2,
-      title: 'هوية بصرية',
-      desc: 'تصميم هوية بصرية متكاملة.'
-    },
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -428,6 +415,11 @@ const Home = () => {
             <Link to="/works/digital" className="inline-flex items-center text-sm font-medium hover:underline gap-1">
                 عرض جميع الأعمال <ChevronLeft size={16} />
             </Link>
+          </div>
+
+          {/* Full Visual Identity boxes */}
+          <div className="mt-16" dir="ltr">
+            <VisualIdentitySections />
           </div>
 
         </div>
